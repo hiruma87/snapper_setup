@@ -22,3 +22,38 @@ File System Layout
 |:----------:|:----------:|
 |@swap       |/swap       |
 
+## Setting up snapper
+If you create a subvolume for /.snapshots or /home/.snapshots
+> as an example, here's mine
+
+'''
+NAME      MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
+sda         8:0    0 894.3G  0 disk  
+├─sda1      8:1    0     1G  0 part  /boot/efi
+└─sda2      8:2    0 893.3G  0 part  /home/.snapshots
+                                     /var/log
+                                     /var/spool
+                                     /var/crash
+                                     /var/cache
+                                     /home
+                                     /var/lib/libvirt/images
+                                     /opt
+                                     /.swap
+                                     /.snapshots
+                                     /
+'''
+unmount them
+```bash
+sudo umount /.snapshots
+sudo umount /home/.snapshots
+```
+Next, remove the folders
+```bash
+sudo rm -r /.snapshots
+sudo rm -r /home/.snapshots
+```
+in case you can't, (which rarely happen or due to there are files in them)
+```bash
+sudo rm -rf /.snapshots
+sudo rm -rf /home/.snapshots
+```
