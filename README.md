@@ -45,15 +45,21 @@ sda         8:0    0 894.3G  0 disk
 unmount them
 ```bash
 sudo umount /.snapshots
+```
+```bash
 sudo umount /home/.snapshots
 ```
 Next, remove the folders
 ```bash
 sudo rm -r /.snapshots
+```
+```bash
 sudo rm -r /home/.snapshots
 ```
 in case you can't, (which rarely happen or due to there are files in them)
 ```bash
 sudo rm -rf /.snapshots
+```
+```
 sudo rm -rf /home/.snapshots
 ```
