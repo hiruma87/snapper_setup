@@ -188,14 +188,14 @@ sudo snapper -c home create --description base_install
 ```
 check if the snapshots created normally
 ```
-$ sudo snapper ls
+$ snapper ls
   # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0  │ single │       │                                 │ root │          │ current                                                                  │
  1  │ single │       │ Sat 16 Nov 2024 09:37:16 AM +08 │ root │          │ base_install                                                             │
  ```
 ```
-$ sudo snapper -c home list
+$ snapper -c home list
  # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ───┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0 │ single │       │                                 │ root │          │ current                                                                  │
