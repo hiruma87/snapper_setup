@@ -223,4 +223,4 @@ $ snapper ls
  0  │ single │       │                                 │ root │          │ current                                                                  │
  1+ │ single │       │ Sat 16 Nov 2024 09:37:16 AM +08 │ root │          │ cinn_base                                                                │
  ```
-Now you can see `*` in front of 1 which means that snapshots had been set as default
+Now you can see `+` in front of 1 which means that snapshots had been set as default
