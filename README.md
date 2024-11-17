@@ -70,7 +70,7 @@ sudo snapper -c root create-config /
 ```bash
 sudo snapper -c home -create-config /home
 ```
-> you can change then name root or home to fits you, this name are self explainatory so better use them
+> you can change the name root or home to fits you, this name are self explainatory so better use them
 
 check back your subvolume list
 ```bash
