@@ -100,7 +100,7 @@ remount them
 sudo mount -av
 ```
 You will get something like
->
+`
 [asura@archlinux ~]$ sudo mount -av
 /                        : ignored
 /boot/efi                : successfully mounted
@@ -116,3 +116,4 @@ You will get something like
 /var/spool               : already mounted
 /var/lib/libvirt/images  : already mounted
 none                     : ignored
+`
