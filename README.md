@@ -1,9 +1,9 @@
 # snapper_setup
 
 ## Credit
-Sysguide: ```https://sysguides.com```
+Sysguide: [Sysguide Website](https://sysguides.com)
 
-Arch Wiki: ```https://wiki.archlinux.org/title/Snapper```
+Arch Wiki: [Arch Snapper Wiki](https://wiki.archlinux.org/title/Snapper)
 
 
 ## Installing Snapper
