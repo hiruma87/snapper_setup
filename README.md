@@ -200,4 +200,27 @@ $ sudo snapper -c home list
  0 │ single │       │                                 │ root │          │ current                                                                  │
  1 │ single │       │ Sat 16 Nov 2024 09:37:24 AM +08 │ root │          │ base_install                                                             │
  ```
-## Settingg System root snapshots as default
+## Setting System root snapshots as default
+Let's check the root id of our newly created snaphots
+```bash
+$ sudo btrfs inspect-internal rootid /.snapshots/1/snapshot/
+271
+```
+The return result shows `271`
+Now let sets it as default root
+```bash
+$ sudo btrfs subvolume set-default 271 /
+```
+Check if the default is set
+```bash
+$ sudo btrfs subvolume get-default /
+ID 271 gen 53 top level 259 path @.snapshots/1/snapshot
+```
+```bash
+$ snapper ls
+  # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
+────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
+ 0  │ single │       │                                 │ root │          │ current                                                                  │
+ 1+ │ single │       │ Sat 16 Nov 2024 09:37:16 AM +08 │ root │          │ cinn_base                                                                │
+ ```
+Now you can see `*` in front of 1 which means that snapshots had been set as default
