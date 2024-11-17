@@ -250,3 +250,18 @@ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 quiet intel_iommu=on iommu=pt"
 GRUB_CMDLINE_LINUX=""
 SUSE_BTRFS_SNAPSHOT_BOOTING="true"  <-- add it here
 ```
+Then, update your grub
+```bash
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg 
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-linux
+Found initrd image: /boot/intel-ucode.img /boot/initramfs-linux.img
+Found fallback initrd image(s) in /boot:  intel-ucode.img initramfs-linux-fallback.img
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+Detecting snapshots ...
+Found snapshot: 2024-11-17 19:00:09 | @.snapshots/46/snapshot | single | timeline <-- if you see this message, then grub successfully detect your snapshot
+```
+with that you can boot from the snapshots in case your system have issues in the future
