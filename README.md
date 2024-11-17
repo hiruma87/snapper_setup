@@ -232,7 +232,8 @@ Install the needed packages
 sudo pacman -S grub-btrfs inotify-tools
 ```
 This is optional, you can also install btrfs snapshots gui helper (in my case it will be btrfs-assistant)
-let get it from the AUR
+
+lets get it from the AUR
 ```
 git clone https://aur.archlinux.org/btrfs-assistant.git
 cd btrfs-assistant
