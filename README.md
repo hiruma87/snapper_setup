@@ -101,7 +101,7 @@ sudo mount -av
 ```
 You will get something like
 ```
-[asura@archlinux ~]$ sudo mount -av
+$ sudo mount -av
 /                        : ignored
 /boot/efi                : successfully mounted
 /media/raid0             : already mounted
@@ -142,3 +142,24 @@ and run again (normally fix it, if not, a reboot will do them nicely)
 ```bash
 sudo mount -av
 ```
+Now then, let check the newly created snapper config
+```
+$ sudo snapper list-configs 
+Config │ Subvolume
+───────┼──────────
+home   │ /home
+root   │ /
+```
+```
+$ sudo snapper ls
+  # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
+────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
+ 0  │ single │       │                                 │ root │          │ current                                                                  │
+```
+```
+$ sudo snapper -c home list
+ # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description │ Userdata
+───┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼─────────────┼─────────
+ 0 │ single │       │                                 │ root │          │ current     │
+ ```
+ 
