@@ -7,7 +7,6 @@ sudo pacman -S snapper
 
 ###Basic Layout
 When installing arch, below are the layout suggested in snapper arch wiki
-| File System Layout |
-
+File System Layout
 |:----------:|:---------:|
 |Subvolume|Mountpoint|
