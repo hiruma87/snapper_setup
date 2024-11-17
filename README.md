@@ -224,3 +224,29 @@ $ snapper ls
  1+ │ single │       │ Sat 16 Nov 2024 09:37:16 AM +08 │ root │          │ cinn_base                                                                │
  ```
 Now you can see `+` in front of 1 which means that snapshots had been set as default
+
+### Setting up for snapshots grub boot
+Install the needed packages
+```bash
+sudo pacman -S grub-btrfs inotify-tools
+```
+This is optional, you can also install btrfs snapshots gui helper (in my case it will be btrfs-assistant)
+let get it from the AUR
+```
+git clone https://aur.archlinux.org/btrfs-assistant.git
+cd btrfs-assistant
+makepkg -si
+```
+Modifying grub.cfg
+Add this line to your /boot/grub/grub.cfg `SUSE_BTRFS_SNAPSHOT_BOOTING="true"`
+```
+$ sudo vim /etc/default/grub
+# GRUB boot loader configuration
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="Arch"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 quiet intel_iommu=on iommu=pt"
+GRUB_CMDLINE_LINUX=""
+SUSE_BTRFS_SNAPSHOT_BOOTING="true"  <-- add it here
+```
