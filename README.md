@@ -265,3 +265,39 @@ Detecting snapshots ...
 Found snapshot: 2024-11-17 19:00:09 | @.snapshots/46/snapshot | single | timeline <-- if you see this message, then grub successfully detect your snapshot
 ```
 with that you can boot from the snapshots in case your system have issues in the future
+
+### Touch up Snapper
+Let check our snapper config
+```bash
+$ sudo vim /etc/snapper/configs/root
+```
+search for these parts and modify as you see fits
+```
+# limit for number cleanup
+NUMBER_MIN_AGE="3600"
+NUMBER_LIMIT="20"
+NUMBER_LIMIT_IMPORTANT="10"
+```
+```
+# limits for timeline cleanup
+TIMELINE_MIN_AGE="3600"
+TIMELINE_LIMIT_HOURLY="10"
+TIMELINE_LIMIT_DAILY="10"
+TIMELINE_LIMIT_WEEKLY="0"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_QUARTERLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+```
+Running systemd
+```bash
+sudo systemctl enable --now grub-btrfsd.service
+```
+below systemd service sometimes run automatically, nothing wrong to double check
+```bash
+sudo systemctl enable --now snapper-timeline.service
+sudo systemctl enable --now snapper-timeline.timer
+```
+```bash
+sudo systemctl enable --now snapper-cleanup.service
+sudo systemctl enable --now snapper-cleanup.timer
+```
