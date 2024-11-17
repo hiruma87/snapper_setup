@@ -27,6 +27,7 @@ If you create a subvolume for /.snapshots or /home/.snapshots
 > as an example, here's mine
 
 ```
+$ lsblk
 NAME      MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 sda         8:0    0 894.3G  0 disk  
 ├─sda1      8:1    0     1G  0 part  /boot/efi
