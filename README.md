@@ -14,3 +14,4 @@ File System Layout
 |@home       |/home       |
 |@.snapshots |/.snapshots |
 |@log        |/var/log    |
+|:----------:|:----------:|
