@@ -1,4 +1,10 @@
 # snapper_setup
+
+## Credit
+Sysguide: ```https://sysguides.com```
+Arch Wiki: ```https://wiki.archlinux.org/title/Snapper```
+
+
 ## Installing Snapper
 ```bash
 sudo pacman -S snapper
