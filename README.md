@@ -14,7 +14,7 @@ File System Layout
 |@home       |/home       |
 |@.snapshots |/.snapshots |
 |@log        |/var/log    |
-> In case you like me, using swapfile as swap, make sure to create a swap subvolume too
+> In case you're like me, using swapfile as swap, make sure to create a swap subvolume too
 
 |  Subvolume | Mountpoint |
 |:----------:|:----------:|
