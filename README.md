@@ -121,15 +121,18 @@ In case you had error when trying to remount /home/.snapshots, check your /etc/f
 ```bash
 vim /etc/fstab
 ```
-> #### /dev/sda2
+```
+# /dev/sda2
 > UUID=5a201d92-77d0-4e40-a731-2cdb96abdaf5	/home/.snapshots	btrfs     	rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=270,subvol=@home/.snapshots	0 0
-
+```
 It is probably due to subvolid in the mount option
 > I normally remove those subvolid early during the arch installation arch-chroot
 
 so, remove them, do the same for others while you at it
-> #### /dev/sda2
-> UUID=5a201d92-77d0-4e40-a731-2cdb96abdaf5	/home/.snapshots	btrfs     	rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@home/.snapshots	0 0
+```
+# /dev/sda2
+UUID=5a201d92-77d0-4e40-a731-2cdb96abdaf5	/home/.snapshots	btrfs     	rw,noatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@home/.snapshots	0 0
+```
 
 reload fstab
 ```bash
