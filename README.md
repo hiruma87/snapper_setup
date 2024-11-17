@@ -25,6 +25,7 @@ File System Layout
 ## Setting up snapper
 If you create a subvolume for /.snapshots or /home/.snapshots
 > as an example, here's mine
+
 '''
 NAME      MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 sda         8:0    0 894.3G  0 disk  
