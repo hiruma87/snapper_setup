@@ -88,7 +88,7 @@ ID 265 gen 199 top level 256 path .snapshots
 ID 270 gen 3760 top level 257 path @home/.snapshots
 ```
 As observed, there are 2 snapshots subvolume, remove 1 and make sure not the one with @
-- @home/.snapshots would be duplicate though
+- @home/.snapshots would not be duplicate though
 ```bash
 sudo btrfs subvolume delete /.snapshots
 ```
