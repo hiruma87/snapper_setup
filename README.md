@@ -1,11 +1,11 @@
 # snapper_setup
-### Installing Snapper
+## Installing Snapper
 ```bash
 sudo pacman -S snapper
 ```
 > Didn't install others due to not wanting to deal with the other services when setting up snapper
 
-### Basic Layout
+## Basic Layout
 When installing arch, below are the layout suggested in snapper arch wiki
 > Sure you can add more like /var/tmp, /var/cache .etc as you suit
 
