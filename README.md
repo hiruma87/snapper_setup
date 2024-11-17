@@ -162,4 +162,42 @@ $ sudo snapper -c home list
 ───┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼─────────────┼─────────
  0 │ single │       │                                 │ root │          │ current     │
  ```
- 
+ You can avoid typing sudo everytime by
+ ```bash
+$ sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
+```
+```bash
+$ sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
+```
+Then you check the config list again
+```bash
+$ snapper list-configs 
+Config │ Subvolume
+───────┼──────────
+home   │ /home
+root   │ /
+```
+Let's create a snapshots
+```bash
+sudo snapper -c root create --description base_install
+```
+and
+```bash
+sudo snapper -c home create --description base_install
+```
+check if the snapshots created normally
+```
+$ sudo snapper ls
+  # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
+────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
+ 0  │ single │       │                                 │ root │          │ current                                                                  │
+ 1  │ single │       │ Sat 16 Nov 2024 09:37:16 AM +08 │ root │          │ base_install                                                             │
+ ```
+```
+$ sudo snapper -c home list
+ # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
+───┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
+ 0 │ single │       │                                 │ root │          │ current                                                                  │
+ 1 │ single │       │ Sat 16 Nov 2024 09:37:24 AM +08 │ root │          │ base_install                                                             │
+ ```
+## Settingg System root snapshots as default
