@@ -1,14 +1,4 @@
 # snap additional subvolume
-cd "${HOME}"
-mkdir git
-cd git
-echo "CLONING: YAY"
-git clone "https://aur.archlinux.org/yay.git"
-cd yay
-makepkg -si --noconfirm
-
-yay -S restorecond --noconfirm --needed
-sleep 3
 sudo mkdir -vp /var/lib/libvirt
 sleep 3
 
@@ -35,9 +25,6 @@ SUBVOLUMES=(
     "var/log"
     "var/spool"
     "var/tmp"
-    "home/$USER/.mozilla"
-    "home/$USER/.thunderbird"
-    "home/$USER/.config/opera"
 )
 sleep 3
 
@@ -55,20 +42,17 @@ for dir in "${SUBVOLUMES[@]}" ; do
     else
         sudo btrfs subvolume create "/${dir}"
     fi
-    sudo restorecond -RF "/${dir}"
     printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
         "btrfs" \
-        "subvol=${dir},${OPTIONS}" \
+        "subvol=@/${dir},${OPTIONS}" \
         "0 0" | \
         sudo tee -a /etc/fstab
 done
 sleep 3
 
 sudo chown -cR $USER:$USER ~/$(ls -A)
-sleep 3
-sudo restorecond -vRF ~/$(ls -A)
 sleep 3
 cat /etc/fstab
 sleep 1
@@ -102,12 +86,20 @@ OPTIONS="$(grep '/opt' /etc/fstab \
     | cut -d, -f2-)"
 sleep 3
 
-for dir in 'home/.snapshots' ; do
+SUBVOLUMES=(
+    'home/.snapshots'
+    "home/$USER/.mozilla"
+    "home/$USER/.thunderbird"
+    "home/$USER/.config/opera"
+)
+sleep 3
+
+for dir in "${SUBVOLUMES[@]}" ; do
     printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
         "btrfs" \
-        "subvol=${dir},${OPTIONS}" \
+        "subvol=@${dir},${OPTIONS}" \
         "0 0" | \
         sudo tee -a /etc/fstab
 done
@@ -119,7 +111,7 @@ sudo systemctl daemon-reload
 sleep 3
 sudo mount -va
 sleep 3
-sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
+sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sleep 3
 sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sleep 3
