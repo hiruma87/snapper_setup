@@ -73,3 +73,7 @@ for dir in "${SUBVOLUMES[@]}" ; do
     fi
 done
 sleep 3
+sudo umount /.snapshots
+sleep 1
+sudo rm -rvf /.snapshots
+sleep 1
