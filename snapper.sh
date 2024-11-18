@@ -142,3 +142,10 @@ sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sleep 3
 sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sleep 3
+SNAP_1_ID="$(sudo btrfs inspect-internal rootid /.snapshots/1/snapshot)"
+sleep 3
+echo ${SNAP_1_ID}
+sleep 3
+sudo btrfs subvolume set-default ${SNAP_1_ID} /
+sleep 3
+sudo btrfs subvolume get-default /
