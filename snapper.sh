@@ -76,6 +76,10 @@ sudo snapper -c root create-config /
 sleep 3
 sudo snapper -c home create-config /home
 sleep 3
+sudo btrfs subvolume delete /.snapshots
+sleep 3
+sudo mkdir /.snapshots
+sleep 3
 ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)"
 sleep 3
 MAX_LEN="$(cat /etc/fstab | awk '{print $2}' | wc -L)"
@@ -87,9 +91,9 @@ OPTIONS="$(grep '/opt' /etc/fstab \
 sleep 3
 
 SUBVOLUMES=(
-    'home/$USER/.mozilla'
-    'home/$USER/.thunderbird'
-    'home/$USER/.config/opera'
+    "home/$USER/.mozilla"
+    "home/$USER/.thunderbird"
+    "home/$USER/.config/opera"
 )
 sleep 3
 
