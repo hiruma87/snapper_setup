@@ -47,7 +47,7 @@ for dir in "${SUBVOLUMES[@]}" ; do
     else
         sudo btrfs subvolume create "/${dir}"
     fi
-    sudo restorecon -RF "/${dir}"
+    sudo restorecond -RF "/${dir}"
     printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
@@ -60,7 +60,7 @@ sleep 3
 
 sudo chown -cR $USER:$USER ~/$(ls -A)
 sleep 3
-sudo restorecon -vRF ~/$(ls -A)
+sudo restorecond -vRF ~/$(ls -A)
 sleep 3
 cat /etc/fstab
 sleep 1
