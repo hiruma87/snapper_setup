@@ -1,8 +1,10 @@
 # snap additional subvolume
+sudo pacman -S restorecond
+sleep 3
 sudo mkdir -vp /var/lib/libvirt
 sleep 3
 
-ROOT_UUID="$(sudo grub2-probe --target=fs_uuid /)" ; echo $ROOT_UUID
+ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)" ; echo $ROOT_UUID
 sleep 3
 
 OPTIONS="$(grep '/home' /etc/fstab \
@@ -72,8 +74,44 @@ for dir in "${SUBVOLUMES[@]}" ; do
         sudo rm -rvf "/${dir}-old"
     fi
 done
+
 sleep 3
 sudo umount /.snapshots
 sleep 1
 sudo rm -rvf /.snapshots
 sleep 1
+sudo snapper -c root create-config /
+sleep 3
+sudo snapper -c home create-config /home
+sleep 3
+ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)"
+sleep 3
+MAX_LEN="$(cat /etc/fstab | awk '{print $2}' | wc -L)"
+sleep 3
+
+OPTIONS="$(grep '/opt' /etc/fstab \
+    | awk '{print $4}' \
+    | cut -d, -f2-)"
+sleep 3
+
+for dir in 'home/.snapshots' ; do
+    printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
+        "UUID=${ROOT_UUID}" \
+        "/${dir}" \
+        "btrfs" \
+        "subvol=${dir},${OPTIONS}" \
+        "0 0" | \
+        sudo tee -a /etc/fstab
+done
+
+sleep 3
+cat /etc/fstab
+sleep 3
+sudo systemctl daemon-reload
+sleep 3
+sudo mount -va
+sleep 3
+sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
+sleep 3
+sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
+sleep 3
