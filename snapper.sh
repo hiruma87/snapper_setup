@@ -1,0 +1,75 @@
+# snap additional subvolume
+sudo mkdir -vp /var/lib/libvirt
+sleep 3
+
+ROOT_UUID="$(sudo grub2-probe --target=fs_uuid /)" ; echo $ROOT_UUID
+sleep 3
+
+OPTIONS="$(grep '/home' /etc/fstab \
+    | awk '{print $4}' \
+    | cut -d, -f2-)" \
+    ; echo $OPTIONS
+sleep 3
+
+SUBVOLUMES=(
+    "opt"
+    "var/cache"
+    "var/crash"
+    "var/lib/AccountsService"
+    # select your greeter
+    #"var/lib/gdm"
+    "var/lib/sddm"
+    #"var/lib/lightdm"
+    #"var/lib/lightdm-data"
+    "var/lib/libvirt/images"
+    "var/log"
+    "var/spool"
+    "var/tmp"
+    "home/$USER/.mozilla"
+    "home/$USER/.thunderbird"
+    "home/$USER/.config/opera"
+)
+sleep 3
+
+printf '%s\n' "${SUBVOLUMES[@]}"
+sleep 3
+
+MAX_LEN="$(printf '/%s\n' "${SUBVOLUMES[@]}" | wc -L)" ; echo $MAX_LEN
+sleep 3
+
+for dir in "${SUBVOLUMES[@]}" ; do
+    if [[ -d "/${dir}" ]] ; then
+        sudo mv -v "/${dir}" "/${dir}-old"
+        sudo btrfs subvolume create "/${dir}"
+        sudo cp -ar "/${dir}-old/." "/${dir}/"
+    else
+        sudo btrfs subvolume create "/${dir}"
+    fi
+    sudo restorecon -RF "/${dir}"
+    printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
+        "UUID=${ROOT_UUID}" \
+        "/${dir}" \
+        "btrfs" \
+        "subvol=${dir},${OPTIONS}" \
+        "0 0" | \
+        sudo tee -a /etc/fstab
+done
+sleep 3
+
+sudo chown -cR $USER:$USER ~/$(ls -A)
+sleep 3
+sudo restorecon -vRF ~/$(ls -A)
+sleep 3
+cat /etc/fstab
+sleep 1
+sudo systemctl daemon-reload
+sleep 1
+sudo btrfs subvolume list /
+sleep 1
+
+for dir in "${SUBVOLUMES[@]}" ; do
+    if [[ -d "/${dir}-old" ]] ; then
+        sudo rm -rvf "/${dir}-old"
+    fi
+done
+sleep 3
