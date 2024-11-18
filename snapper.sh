@@ -1,5 +1,13 @@
 # snap additional subvolume
-sudo pacman -S restorecond
+cd "${HOME}"
+mkdir git
+cd git
+echo "CLONING: YAY"
+git clone "https://aur.archlinux.org/yay.git"
+cd yay
+makepkg -si --noconfirm
+
+yay -S restorecond --noconfirm --needed
 sleep 3
 sudo mkdir -vp /var/lib/libvirt
 sleep 3
