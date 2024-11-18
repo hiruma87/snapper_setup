@@ -87,14 +87,26 @@ OPTIONS="$(grep '/opt' /etc/fstab \
 sleep 3
 
 SUBVOLUMES=(
-    'home/.snapshots'
-    "home/$USER/.mozilla"
-    "home/$USER/.thunderbird"
-    "home/$USER/.config/opera"
+    'home/$USER/.mozilla'
+    'home/$USER/.thunderbird'
+    'home/$USER/.config/opera'
 )
 sleep 3
 
+printf '%s\n' "${SUBVOLUMES[@]}"
+sleep 3
+
+MAX_LEN="$(printf '/%s\n' "${SUBVOLUMES[@]}" | wc -L)" ; echo $MAX_LEN
+sleep 3
+
 for dir in "${SUBVOLUMES[@]}" ; do
+    if [[ -d "/${dir}" ]] ; then
+        sudo mv -v "/${dir}" "/${dir}-old"
+        sudo btrfs subvolume create "/${dir}"
+        sudo cp -ar "/${dir}-old/." "/${dir}/"
+    else
+        sudo btrfs subvolume create "/${dir}"
+    fi
     printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
@@ -103,7 +115,17 @@ for dir in "${SUBVOLUMES[@]}" ; do
         "0 0" | \
         sudo tee -a /etc/fstab
 done
+sleep 3
 
+for dir in 'home/.snapshots' ; do
+    printf "%-41s %-${MAX_LEN}s %-5s %-s %-s\n" \
+        "UUID=${ROOT_UUID}" \
+        "/${dir}" \
+        "btrfs" \
+        "subvol=@${dir},${OPTIONS}" \
+        "0 0" | \
+        sudo tee -a /etc/fstab
+done
 sleep 3
 cat /etc/fstab
 sleep 3
