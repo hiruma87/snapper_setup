@@ -157,3 +157,15 @@ sleep 3
 sudo sed -i 's/GRUB_CMDLINE_LINUX=.*/&\nSUSE_BTRFS_SNAPSHOT_BOOTING="true"/' /etc/default/grub
 sleep 3
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+sleep 3
+sudo setfacl -R -b home/$USER/.mozilla
+sudo setfacl -R -b home/$USER/.thunderbird
+sudo setfacl -R -b home/$USER/.config/opera
+sleep 3
+sudo setfacl -R -m u:$USER:rwX home/$USER/.mozilla
+sudo setfacl -R -m u:$USER:rwX home/$USER/.thunderbird
+sudo setfacl -R -m u:$USER:rwX home/$USER/.config/opera
+sleep 3
+sudo setfacl -m d:u:$USER:rwx home/$USER/.mozilla
+sudo setfacl -m d:u:$USER:rwx home/$USER/.thunderbird
+sudo setfacl -m d:u:$USER:rwx home/$USER/.config/opera
