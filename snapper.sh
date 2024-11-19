@@ -169,6 +169,8 @@ for dir in 'home/.snapshots' ; do
         sudo tee -a /etc/fstab
 done
 sleep 3
+sudo chown -cR $USER:$USER ~/$(ls -A)
+sleep 3
 cat /etc/fstab
 sleep 3
 sudo systemctl daemon-reload
