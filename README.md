@@ -322,6 +322,7 @@ ___
   subvol=@,noatime 0 0
   ```
 > Where subvol= is at the front not at the back like usual
+
 > There are somewhere in the script that automated mount your subvolume, if the option is not at the front, it will not work properly
 
 - Run the script
