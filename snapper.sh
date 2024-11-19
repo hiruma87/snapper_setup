@@ -153,3 +153,7 @@ sleep 3
 sudo btrfs subvolume set-default ${SNAP_1_ID} /
 sleep 3
 sudo btrfs subvolume get-default /
+sleep 3
+sudo sed -i 's/GRUB_DEFAULT=.*/&\nSUSE_BTRFS_SNAPSHOT_BOOTING="true"/' /etc/default/grub
+sleep 3
+sudo grub-mkconfig -o /boot/grub/grub.cfg
