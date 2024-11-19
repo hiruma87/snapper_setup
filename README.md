@@ -319,5 +319,21 @@ ___
 - Before anything else, check your ``/etc/fstab``
 - Make sure the mount option something like
   ```
-  aubvol=@,noatime 0 0
+  subvol=@,noatime 0 0
   ```
+> Where subvol= is at the front not at the back like usual
+> There are somewhere in the script that automated mount your subvolume, if the option is not at the front, it will not work properly
+
+- Run the script
+  ```bash
+  sh snapper.sh
+  ```
+  or
+  1. make it executable
+     ```bash
+     chmod +x snapper.sh
+     ```
+  2. Run it
+     ```bash
+     ./snapper.sh
+     ```
