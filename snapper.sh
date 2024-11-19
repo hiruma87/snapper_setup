@@ -1,7 +1,7 @@
 # snap additional subvolume
 sudo mkdir -vp /var/lib/libvirt
 sleep 3
-sudo mkdir -p /home/$USER/.config/
+sudo mkdir -vp /home/$USER/.config/
 sleep 3
 ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)" ; echo $ROOT_UUID
 sleep 3
