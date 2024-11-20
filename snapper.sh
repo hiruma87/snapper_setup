@@ -36,7 +36,7 @@ sudo snapper -c home list
 sleep 1
 
 # modify /etc/fstab and mounting
-ROOT_UUID="$(sudo grub2-probe --target=fs_uuid /)" # get the existing UUID
+ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)" # get the existing UUID
 sleep 1
 MAX_LEN="$(cat /etc/fstab | awk '{print $2}' | wc -L)"
 sleep 1
