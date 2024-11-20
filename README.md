@@ -285,6 +285,12 @@ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=0 quiet intel_iommu=on iommu=pt"
 GRUB_CMDLINE_LINUX=""
 SUSE_BTRFS_SNAPSHOT_BOOTING="true"  <-- add it here
 ```
+Alternatively, you can use `sed` command to add it, the command something like
+```bash
+sudo sed -i 's/GRUB_CMDLINE_LINUX=.*/&\nSUSE_BTRFS_SNAPSHOT_BOOTING="true"/' /etc/default/grub
+```
+> If you use above command, make sure to double check you '/etc/default/grub'
+
 Then, update your grub
 ```bash
 $ sudo grub-mkconfig -o /boot/grub/grub.cfg
