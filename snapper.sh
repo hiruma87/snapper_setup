@@ -20,7 +20,7 @@ sudo snapper -c home create-config /home # home folder
 sleep 1
 
 # checking existing config
-sudo snapper list-config
+sudo snapper list-configs
 sleep 1
 
 # remove created subvolume
