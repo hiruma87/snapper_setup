@@ -65,3 +65,34 @@ sudo systemctl daemon-reload
 sleep 1
 sudo mount -va
 sleep 1
+
+#setting grub
+# adding to /etc/default/grub
+sudo sed -i 's/GRUB_CMDLINE_LINUX=.*/&\nSUSE_BTRFS_SNAPSHOT_BOOTING="true"/' /etc/default/grub
+sleep 1
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sleep 1
+
+#create a snapshot
+sudo snapper -c root create --description base
+sleep 1
+sudo snapper -c home create --description base
+sleep 1
+
+# check if they create properly
+snapper ls
+sleep 1
+snapper -c home list
+sleep 1
+
+#set created subvolume as default
+SNAP_1_ID="$(sudo btrfs inspect-internal rootid /.snapshots/1/snapshot)"
+sleep 1
+echo ${SNAP_1_ID}
+sleep 1
+sudo btrfs subvolume set-default ${SNAP_1_ID} /
+sleep 1
+sudo btrfs subvolume get-default /
+sleep 1
+
+# lastly reboot
