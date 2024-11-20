@@ -35,6 +35,8 @@ If you create a subvolume for /.snapshots or /home/.snapshots
 
 ```
 $ lsblk
+```
+```
 NAME      MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 sda         8:0    0 894.3G  0 disk  
 ├─sda1      8:1    0     1G  0 part  /boot/efi
@@ -87,6 +89,8 @@ sudo btrfs subvolume list /
 You may get something like
 ```
 $ sudo btrfs subvolume list /
+```
+```
 ID 256 gen 199 top level 5 path @
 ID 257 gen 186 top level 5 path @home
 ID 258 gen 9 top level 5 path @.snapshots
@@ -110,6 +114,8 @@ sudo mount -av
 You will get something like
 ```
 $ sudo mount -av
+```
+```
 /                        : ignored
 /boot/efi                : successfully mounted
 /media/raid0             : already mounted
@@ -152,7 +158,9 @@ sudo mount -av
 ```
 Now then, let check the newly created snapper config
 ```
-$ sudo snapper list-configs 
+$ sudo snapper list-configs
+```
+```
 Config │ Subvolume
 ───────┼──────────
 home   │ /home
@@ -160,6 +168,8 @@ root   │ /
 ```
 ```
 $ sudo snapper ls
+```
+```
   # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0  │ single │       │                                 │ root │          │ current                                                                  │
@@ -179,7 +189,9 @@ $ sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
 ```
 Then you check the config list again
 ```bash
-$ snapper list-configs 
+$ snapper list-configs
+```
+```
 Config │ Subvolume
 ───────┼──────────
 home   │ /home
@@ -196,6 +208,8 @@ sudo snapper -c home create --description base_install
 check if the snapshots created normally
 ```
 $ snapper ls
+```
+```
   # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0  │ single │       │                                 │ root │          │ current                                                                  │
@@ -203,6 +217,8 @@ $ snapper ls
  ```
 ```
 $ snapper -c home list
+```
+```
  # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ───┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0 │ single │       │                                 │ root │          │ current                                                                  │
@@ -212,6 +228,8 @@ $ snapper -c home list
 Let's check the root id of our newly created snaphots
 ```bash
 $ sudo btrfs inspect-internal rootid /.snapshots/1/snapshot/
+```
+```
 271
 ```
 The return result shows `271`
@@ -222,10 +240,14 @@ $ sudo btrfs subvolume set-default 271 /
 Check if the default is set
 ```bash
 $ sudo btrfs subvolume get-default /
+```
+```
 ID 271 gen 53 top level 259 path @.snapshots/1/snapshot
 ```
 ```bash
 $ snapper ls
+```
+```
   # │ Type   │ Pre # │ Date                            │ User │ Cleanup  │ Description                                                              │ Userdata
 ────┼────────┼───────┼─────────────────────────────────┼──────┼──────────┼──────────────────────────────────────────────────────────────────────────┼─────────
  0  │ single │       │                                 │ root │          │ current                                                                  │
@@ -243,6 +265,8 @@ This is optional, you can also install btrfs snapshots gui helper (in my case it
 lets get it from the AUR
 ```
 git clone https://aur.archlinux.org/btrfs-assistant.git
+```
+```
 cd btrfs-assistant
 makepkg -si
 ```
@@ -250,6 +274,8 @@ Modifying grub.cfg
 Add this line to your /boot/grub/grub.cfg `SUSE_BTRFS_SNAPSHOT_BOOTING="true"`
 ```
 $ sudo vim /etc/default/grub
+```
+```
 # GRUB boot loader configuration
 
 GRUB_DEFAULT=0
@@ -261,7 +287,9 @@ SUSE_BTRFS_SNAPSHOT_BOOTING="true"  <-- add it here
 ```
 Then, update your grub
 ```bash
-$ sudo grub-mkconfig -o /boot/grub/grub.cfg 
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+```
 Generating grub configuration file ...
 Found linux image: /boot/vmlinuz-linux
 Found initrd image: /boot/intel-ucode.img /boot/initramfs-linux.img
@@ -301,13 +329,17 @@ Running systemd
 ```bash
 sudo systemctl enable --now grub-btrfsd.service
 ```
-below systemd service sometimes run automatically, nothing wrong to double check
+below systemd service should run automatically, nothing wrong to double check
 ```bash
 sudo systemctl enable --now snapper-timeline.service
+```
+```
 sudo systemctl enable --now snapper-timeline.timer
 ```
 ```bash
 sudo systemctl enable --now snapper-cleanup.service
+```
+```
 sudo systemctl enable --now snapper-cleanup.timer
 ```
 ___
