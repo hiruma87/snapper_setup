@@ -29,16 +29,10 @@ sudo btrfs subvolume delete /.snapshots
 #create back the folder
 sudo mkdir /.snapshots
 
-# set so user can use snapper
-sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes  # root config
-sleep 1
-sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes # home config
-sleep 1
-
 # see if it working
-snapper ls
+sudo snapper ls
 sleep 1
-snapper -c home list
+sudo snapper -c home list
 sleep 1
 
 # modify /etc/fstab and mounting
@@ -54,7 +48,7 @@ for dir in 'home/.snapshots' ; do
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
         "btrfs" \
-        "subvol=${dir},${OPTIONS}" \
+        "subvol=@${dir},${OPTIONS}" \
         "0 0" | \
         sudo tee -a /etc/fstab
 done
@@ -64,6 +58,12 @@ sleep 1
 sudo systemctl daemon-reload
 sleep 1
 sudo mount -va
+sleep 1
+
+# set so user can use snapper
+sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes  # root config
+sleep 1
+sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes # home config
 sleep 1
 
 #setting grub
