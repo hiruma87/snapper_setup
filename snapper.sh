@@ -1,3 +1,4 @@
+#!/bin/bash
 ## Automated Snapper setup
 # umount .snapshots if exist
 sudo umount /.snapshots
