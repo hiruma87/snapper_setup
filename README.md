@@ -270,6 +270,13 @@ git clone https://aur.archlinux.org/btrfs-assistant.git
 cd btrfs-assistant
 makepkg -si
 ```
+If you want to automatically capture a snapshots during `pacman -S` activity, install snap-pac
+```bash
+sudo pacman -S snap-pac
+```
+> This will create a snapshots everytime you do an install or update
+
+
 Modifying grub.cfg
 Add this line to your /boot/grub/grub.cfg `SUSE_BTRFS_SNAPSHOT_BOOTING="true"`
 ```
