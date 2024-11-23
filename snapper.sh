@@ -9,9 +9,14 @@ sudo rm -r /.snapshots
 #sudo rm -r /home/.snapshots
 
 # get mount OPTIONS from a unique subvolume name
+#OPTIONS="$(grep '/home' /etc/fstab \
+#    | awk '{print $4}' \
+#    | cut -d, -f2-)" \
+#    ; echo $OPTIONS
+
 OPTIONS="$(grep '/home' /etc/fstab \
     | awk '{print $4}' \
-    | cut -d, -f2-)" \
+    | cut -d, -f1-5)" \
     ; echo $OPTIONS
     
 # create a snapper config
