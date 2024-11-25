@@ -18,6 +18,11 @@ OPTIONS="$(grep '/home' /etc/fstab \
     | awk '{print $4}' \
     | cut -d, -f1-5)" \
     ; echo $OPTIONS
+
+ROOT_UUID="$(grep '/home' /etc/fstab \
+    | awk '{print $1}' \
+    | cut -d= -f2)" \
+    ; echo $ROOT_UUID
     
 # create a snapper config
 sudo snapper -c root create-config / # root folder
@@ -42,8 +47,6 @@ sudo snapper -c home list
 sleep 1
 
 # modify /etc/fstab and mounting
-ROOT_UUID="$(sudo grub-probe --target=fs_uuid /)" # get the existing UUID
-sleep 1
 MAX_LEN="$(cat /etc/fstab | awk '{print $2}' | wc -L)"
 sleep 1
 # since I created a /.snapshots subvolume during isntallation, only 1 subvol listed
