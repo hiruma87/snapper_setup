@@ -54,7 +54,7 @@ for dir in 'home/.snapshots' ; do
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
         "btrfs" \
-        "subvol=@${dir},${OPTIONS}" \
+        "subvol=${OPTIONS},@${dir}" \
         "0 0" | \
         sudo tee -a /etc/fstab
 done
